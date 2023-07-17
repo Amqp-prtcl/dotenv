@@ -46,6 +46,8 @@ func SetSave(key string, value string) error {
 }
 
 func LoadEnv() error {
+	Envs = map[string]string{}
+
 	f, err := os.Open(envPath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -55,7 +57,6 @@ func LoadEnv() error {
 	}
 	defer f.Close()
 
-	Envs = map[string]string{}
 	r := bufio.NewReader(f)
 	eof := false
 	for {
