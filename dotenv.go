@@ -108,17 +108,17 @@ func SaveEnv() error {
 func trimSpaces(buf *string) {
 	l := len(*buf)
 	st := 0
-	for st < l && validChar(*buf, st) {
+	for st < l && emptyChar(*buf, st) {
 		st++
 	}
 	end := l - 1
-	for end >= 0 && validChar(*buf, st) {
+	for end >= 0 && emptyChar(*buf, st) {
 		end--
 	}
 	(*buf) = (*buf)[st : end+1]
 }
 
-func validChar(b string, i int) bool {
+func emptyChar(b string, i int) bool {
 	switch b[i] {
 	case ' ', '\r', '\t', '\n':
 		return true
