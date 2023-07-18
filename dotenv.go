@@ -39,10 +39,15 @@ func Set(key string, value string) error {
 // Please Note that this function will not return an
 // error if it fails during saving as it will happen
 // in another coroutine
-func SetSave(key string, value string) error {
+func SetSave(key string, value string, blocking ...bool) error {
 	Envs[key] = value
-	go SaveEnv()
-	return os.Setenv(key, value)
+	var err = os.Setenv(key, value)
+	if len(blocking) != 0 && blocking[0] {
+		SaveEnv()
+	} else {
+		go SaveEnv()
+	}
+	return err
 }
 
 func LoadEnv() error {
